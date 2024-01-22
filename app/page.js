@@ -1,6 +1,7 @@
 "use client";
 import CategoryList from "@/components/Home/CategoryList";
 import RangeSelect from "@/components/Home/RangeSelect";
+import SelectRating from "@/components/Home/SelectRating";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -20,6 +21,7 @@ export default function Home() {
       <div className="p-3">
         <CategoryList />
         <RangeSelect />
+        <SelectRating />
       </div>
       <div className=" col-span-3">Second</div>
     </div>
