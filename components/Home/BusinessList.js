@@ -1,8 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
+import { SelectedBusinessContext } from "@/context/SelectedBusinessContext";
 import BusinessItem from "./BusinessItem";
 
 function BusinessList({ businessList }) {
   const elementRef = useRef(null);
+  const { selectedBusiness, setSelectedBusiness } = useContext(
+    SelectedBusinessContext
+  );
 
   const slideRight = (element) => {
     element.scrollLeft += 500;
@@ -35,7 +39,9 @@ function BusinessList({ businessList }) {
         ref={elementRef}
       >
         {businessList.map((item, index) => (
-          <BusinessItem business={item} key={index} />
+          <div key={index} onClick={() => setSelectedBusiness(item)}>
+            <BusinessItem business={item} />
+          </div>
         ))}
       </div>
       <svg

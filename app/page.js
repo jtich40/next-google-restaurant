@@ -54,7 +54,7 @@ export default function Home() {
         <SelectRating />
       </div>
       <div className=" col-span-3">
-        <GoogleMapView />
+        <GoogleMapView businessList={businessList} />
         <div className="md:absolute w-[90%] md:w-[71%] ml-6 md:m1-10 bottom-36 relative md:bottom-3">
           {!loading ? (
             <BusinessList businessList={businessList} />

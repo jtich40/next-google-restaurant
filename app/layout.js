@@ -5,6 +5,7 @@ import "./globals.css";
 import HeaderNavbar from "@/components/HeaderNavbar";
 import { useState, useEffect } from "react";
 import { UserLocationContext } from "@/context/UserLocationContext";
+import { SelectedBusinessContext } from "@/context/SelectedBusinessContext";
 
 const raleway = Raleway({ subsets: ["latin"] });
 
@@ -15,6 +16,7 @@ const metadata = {
 
 export default function RootLayout({ children }) {
   const [userLocation, setUserLocation] = useState([]);
+  const [selectedBusiness, setSelectedBusiness] = useState([]);
 
   useEffect(() => {
     getUserLocation();
@@ -33,12 +35,16 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={raleway.className}>
         <Provider>
-          <UserLocationContext.Provider
-            value={{ userLocation, setUserLocation }}
+          <SelectedBusinessContext.Provider
+            value={{ selectedBusiness, setSelectedBusiness }}
           >
-            <HeaderNavbar />
-            {children}
-          </UserLocationContext.Provider>
+            <UserLocationContext.Provider
+              value={{ userLocation, setUserLocation }}
+            >
+              <HeaderNavbar />
+              {children}
+            </UserLocationContext.Provider>
+          </SelectedBusinessContext.Provider>
         </Provider>
       </body>
     </html>

@@ -1,8 +1,9 @@
 import { UserLocationContext } from "@/context/UserLocationContext";
 import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import React, { useContext } from "react";
+import Markers from "./Markers";
 
-function GoogleMapView() {
+function GoogleMapView({ businessList }) {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
@@ -33,6 +34,10 @@ function GoogleMapView() {
               },
             }}
           />
+          {businessList.map(
+            (item, index) =>
+              index <= 7 && <Markers business={item} key={index} />
+          )}
         </GoogleMap>
       )}
     </div>
