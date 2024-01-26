@@ -5,6 +5,7 @@ import CategoryList from "@/components/Home/CategoryList";
 import GoogleMapView from "@/components/Home/GoogleMapView";
 import RangeSelect from "@/components/Home/RangeSelect";
 import SelectRating from "@/components/Home/SelectRating";
+import SkeletonLoading from "@/components/SkeletonLoading";
 import { UserLocationContext } from "@/context/UserLocationContext";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -17,6 +18,7 @@ export default function Home() {
   const [radius, setRadius] = useState(2500);
   const [businessList, setBusinessList] = useState([]);
   const [businessListOrg, setBusinessListOrg] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const { userLocation, setUserLocation } = useContext(UserLocationContext);
   const router = useRouter();
@@ -32,6 +34,7 @@ export default function Home() {
   }, [category, radius]);
 
   const getGooglePlace = () => {
+    setLoading(true);
     GlobalApi.getGooglePlace(
       category,
       radius,
@@ -40,6 +43,7 @@ export default function Home() {
     ).then((res) => {
       console.log(res.data.product.results);
       setBusinessList(res.data.product.results);
+      setLoading(false);
     });
   };
   return (
@@ -52,7 +56,15 @@ export default function Home() {
       <div className=" col-span-3">
         <GoogleMapView />
         <div className="md:absolute w-[90%] md:w-[71%] ml-6 md:m1-10 bottom-36 relative md:bottom-3">
-          <BusinessList businessList={businessList} />
+          {!loading ? (
+            <BusinessList businessList={businessList} />
+          ) : (
+            <div className="flex gap-3">
+              {[1, 2, 3, 4, 5].map((item) => (
+                <SkeletonLoading />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
