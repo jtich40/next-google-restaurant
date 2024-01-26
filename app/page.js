@@ -1,5 +1,6 @@
 "use client";
 import GlobalApi from "@/Shared/GlobalApi";
+import BusinessList from "@/components/Home/BusinessList";
 import CategoryList from "@/components/Home/CategoryList";
 import GoogleMapView from "@/components/Home/GoogleMapView";
 import RangeSelect from "@/components/Home/RangeSelect";
@@ -15,6 +16,8 @@ export default function Home() {
   const [category, setCategory] = useState();
   const [radius, setRadius] = useState(2500);
   const [businessList, setBusinessList] = useState([]);
+  const [businessListOrg, setBusinessListOrg] = useState([]);
+
   const { userLocation, setUserLocation } = useContext(UserLocationContext);
   const router = useRouter();
 
@@ -35,7 +38,7 @@ export default function Home() {
       userLocation.lat,
       userLocation.lng
     ).then((res) => {
-      // console.log(res.data.product.results);
+      console.log(res.data.product.results);
       setBusinessList(res.data.product.results);
     });
   };
@@ -48,6 +51,9 @@ export default function Home() {
       </div>
       <div className=" col-span-3">
         <GoogleMapView />
+        <div className="md:absolute w-[90%] md:w-[71%] ml-6 md:m1-10 bottom-36 relative md:bottom-3">
+          <BusinessList businessList={businessList} />
+        </div>
       </div>
     </div>
   );
